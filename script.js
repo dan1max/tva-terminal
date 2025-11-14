@@ -1,31 +1,30 @@
-// Espera a que todo el HTML esté cargado
+// Wait for the DOM to load
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- Base de Datos (Simulada) ---
-    // NO HAGAS ESTO EN UN SITIO REAL. Las contraseñas NUNCA deben estar en el código.
+    // --- Simulated Database ---
     const agentCredentials = {
         'general': 'tva123',
-        'soldado': 'tva123',
-        'analista': 'tva123',
-        'juez': 'tva123',
-        'oficinista': 'tva123',
-        'creador': 'tva123'
+        'soldier': 'tva123',
+        'analyst': 'tva123',
+        'judge': 'tva123',
+        'officeworker': 'tva123',
+        'creator': 'tva123'
     };
-
-    // --- Elementos del DOM ---
+    
+    // --- DOM Elements ---
     const loginScreen = document.getElementById('login-screen');
     const tvaTerminal = document.getElementById('tva-terminal');
     const loginButton = document.getElementById('login-button');
     const logoutButton = document.getElementById('logout-button');
-    const failSafeButton = document.getElementById('fail-safe-button');
+    const purgeButton = document.getElementById('purge-button');
     const usernameInput = document.getElementById('username');
     const passwordInput = document.getElementById('password');
     const loginError = document.getElementById('login-error');
     const agentIdSpan = document.getElementById('agent-id');
+    const allScreens = document.querySelectorAll('.screen');
+    const roleNavItems = document.querySelectorAll('.nav-role');
 
-    const allPanels = document.querySelectorAll('.panel');
-
-    // --- Lógica de Login ---
+    // --- Login Logic ---
     loginButton.addEventListener('click', handleLogin);
     passwordInput.addEventListener('keyup', (e) => {
         if (e.key === 'Enter') handleLogin();
@@ -35,91 +34,108 @@ document.addEventListener('DOMContentLoaded', () => {
         const user = usernameInput.value.toLowerCase();
         const pass = passwordInput.value;
 
-        // Verifica las credenciales
         if (agentCredentials[user] && agentCredentials[user] === pass) {
-            // Éxito
+            // Success
             loginScreen.style.display = 'none';
-            tvaTerminal.style.display = 'flex'; // Usamos flex por el layout de CSS
+            tvaTerminal.style.display = 'flex';
             agentIdSpan.textContent = user.toUpperCase();
             
-            showPanelForRole(user);
-
-            // Muestra el botón Fail Safe solo para el creador
-            if (user === 'creador') {
-                failSafeButton.style.display = 'block';
-            }
+            configureNavForRole(user);
+            showScreen('screen-home'); // Show home screen by default
 
             loginError.style.display = 'none';
             usernameInput.value = '';
             passwordInput.value = '';
 
         } else {
-            // Fallo
+            // Failure
             loginError.style.display = 'block';
         }
     }
-
-    // --- Lógica de Paneles ---
-    function showPanelForRole(role) {
-        // Oculta todos los paneles
-        allPanels.forEach(panel => {
-            panel.style.display = 'none';
+    
+    // --- Navigation Logic ---
+    function configureNavForRole(role) {
+        // Hide all role-specific nav items
+        roleNavItems.forEach(item => {
+            item.style.display = 'none';
         });
 
-        // Muestra el panel específico
-        let panelToShow;
-        switch(role) {
-            case 'general':
-                panelToShow = document.getElementById('panel-general');
-                break;
-            case 'soldado':
-                panelToShow = document.getElementById('panel-soldado');
-                break;
-            case 'analista':
-                panelToShow = document.getElementById('panel-analista');
-                break;
-            case 'juez':
-                panelToShow = document.getElementById('panel-juez');
-                break;
-            case 'oficinista':
-            case 'creador': // El creador ve el panel de oficinista
-            default:
-                panelToShow = document.getElementById('panel-oficinista');
-                break;
+        // Show nav items based on role
+        if (role === 'soldier') {
+            document.getElementById('nav-minuteman').style.display = 'block';
         }
-        
-        if (panelToShow) {
-            panelToShow.style.display = 'block';
+        if (role === 'analyst') {
+            document.getElementById('nav-analyst').style.display = 'block';
         }
+        if (role === 'judge') {
+            document.getElementById('nav-judge').style.display = 'block';
+        }
+        if (role === 'general') {
+            document.getElementById('nav-minuteman').style.display = 'block';
+            document.getElementById('nav-analyst').style.display = 'block';
+            document.getElementById('nav-tactical').style.display = 'block';
+        }
+        if (role === 'creator') {
+            // Creator sees all
+            roleNavItems.forEach(item => {
+                item.style.display = 'block';
+            });
+        }
+        // Office worker sees no special nav items
     }
-
-    // --- Lógica de Botones ---
+    
     logoutButton.addEventListener('click', () => {
         tvaTerminal.style.display = 'none';
         loginScreen.style.display = 'flex';
-        failSafeButton.style.display = 'none';
     });
 
-    // 4. FUNCIÓN FAIL SAFE
-    failSafeButton.addEventListener('click', () => {
-        // Desactiva la página
-        document.body.innerHTML = '<h1 style="color: red; font-size: 5vw; text-align: center; margin-top: 40vh;">LA SAGRADA LÍNEA TEMPORAL HA SIDO COMPROMETIDA. PROTOCOLO FAIL SAFE ACTIVADO.</h1>';
-        // La única forma de "volver" es recargando la página manualmente (F5)
-    });
+    // --- Failsafe Logic ---
+    purgeButton.addEventListener('click', ()Failsafe);
+
+    function triggerFailsafe() {
+        const failsafeScreen = document.getElementById('failsafe-screen');
+        const failsafeTimer = document.getElementById('failsafe-timer');
+        const failsafeMessage = document.getElementById('failsafe-message');
+        
+        failsafeScreen.style.display = 'flex';
+        tvaTerminal.style.display = 'none'; // Hide the terminal
+
+        let count = 10;
+        failsafeTimer.textContent = count;
+        
+        const countdown = setInterval(() => {
+            count--;
+            failsafeTimer.textContent = count;
+            
+            if (count <= 0) {
+                clearInterval(countdown);
+                failsafeTimer.textContent = 'PURGE COMPLETE';
+                failsafeMessage.textContent = 'THIS TERMINAL HAS BEEN RESET. ALL DATA ERASED.';
+                // At this point, the page is "bricked". Nothing else will work.
+            }
+        }, 1000);
+    }
+    
+    // Make the showScreen function global so HTML onClicks can see it
+    window.showScreen = (screenId) => {
+        allScreens.forEach(screen => {
+            screen.style.display = 'none';
+        });
+        document.getElementById(screenId).style.display = 'block';
+    }
 });
 
-// --- Funciones de Widgets (Globales para que el HTML las vea) ---
-
+// --- Global Widget Functions ---
 function clockIn() {
-    document.getElementById('clock-status').textContent = 'En Servicio (Clocked In)';
-    alert('Has fichado. ¡Por la sagrada línea temporal!');
+    document.getElementById('clock-status').textContent = 'ON DUTY';
+    alert('Clocked In. For all time. Always.');
 }
 
 function clockOut() {
-    document.getElementById('clock-status').textContent = 'Fuera de Servicio (Clocked Out)';
-    alert('Has terminado tu servicio. No olvides tu papeleo.');
+    document.getElementById('clock-status').textContent = 'OFF DUTY';
+    alert('Clocked Out. Be sure to file your reports.');
 }
 
 function sentence(verdict) {
-    alert(`Variante L1130 sentenciada como: ${verdict.toUpperCase()}. El caso ha sido cerrado.`);
+    alert(`Variant L1130 sentenced as: ${verdict.toUpperCase()}. Case file closed.`);
 }
