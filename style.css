@@ -1,181 +1,213 @@
-/* FUENTES */
+/* --- FONTS & VARIABLES --- */
 :root {
-    --font-display: 'Playfair Display', serif;
-    --font-body: 'Courier Prime', monospace;
-    
-    --color-bg: #F5EFE6; /* Beige TVA */
-    --color-text: #3D2B1F; /* Marrón oscuro */
-    --color-primary: #D97706; /* Naranja TVA */
-    --color-secondary: #5E3A1E; /* Marrón madera */
-    --color-accent: #6D8B74; /* Verde oficina */
-    --color-border: #D1C0A8;
+    --font-terminal: 'VT323', monospace;
+    --color-green: #00FF41;
+    --color-darkgreen: #008F11;
+    --color-bg: #000000;
+    --color-glow: rgba(0, 255, 65, 0.75);
+}
+
+/* --- GLOBAL RESET & THEME --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    font-family: var(--font-body);
+    font-family: var(--font-terminal);
     background-color: var(--color-bg);
-    color: var(--color-text);
-    margin: 0;
-    padding: 0;
+    color: var(--color-green);
+    text-shadow: 0 0 5px var(--color-glow);
+    font-size: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    overflow: hidden; /* Hide scrollbars */
 }
 
-h1, h2, h3 {
-    font-family: var(--font-display);
-    color: var(--color-secondary);
+h1, h2, h3, h4, h5, h6 {
+    color: var(--color-green);
+    text-shadow: 0 0 8px var(--color-glow);
+    margin-bottom: 10px;
 }
 
+p {
+    margin-bottom: 10px;
+}
+
+pre {
+    font-family: var(--font-terminal);
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+/* --- SCANLINE & FLICKER EFFECT --- */
+body::after {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 4px, 3px 100%;
+    z-index: 2;
+    pointer-events: none;
+    animation: flicker 0.1s infinite;
+}
+
+@keyframes flicker {
+  0% { opacity: 1; }
+  50% { opacity: 0.9; }
+  100% { opacity: 1; }
+}
+
+/* --- BUTTONS & INPUTS --- */
 button {
-    font-family: var(--font-body);
-    font-weight: 700;
-    background-color: var(--color-primary);
-    color: white;
-    border: none;
-    padding: 10px 15px;
+    font-family: var(--font-terminal);
+    font-size: 18px;
+    color: var(--color-green);
+    text-shadow: 0 0 5px var(--color-glow);
+    background: var(--color-bg);
+    border: 1px solid var(--color-green);
+    padding: 8px 12px;
     cursor: pointer;
-    border-radius: 3px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    transition: background-color 0.2s;
 }
-
 button:hover {
-    background-color: #B86504;
+    background: var(--color-green);
+    color: var(--color-bg);
+    text-shadow: none;
+}
+button:disabled {
+    color: var(--color-darkgreen);
+    border-color: var(--color-darkgreen);
+    text-shadow: none;
+    cursor: not-allowed;
 }
 
 input[type="text"], input[type="password"] {
-    font-family: var(--font-body);
-    border: 2px solid var(--color-border);
-    background: #ffffff;
-    padding: 8px;
+    font-family: var(--font-terminal);
+    font-size: 20px;
+    background: var(--color-bg);
+    border: 1px solid var(--color-green);
+    color: var(--color-green);
+    padding: 5px;
     width: 100%;
-    box-sizing: border-box;
-    border-radius: 3px;
 }
 
-.tva-logo {
-    width: 150px;
-    margin-bottom: 20px;
-}
-
-.tva-logo-small {
-    width: 40px;
-    margin-right: 15px;
-}
-
-/* PANTALLA DE LOGIN */
+/* --- LOGIN SCREEN --- */
 #login-screen {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
 .login-container {
-    background: #EAE0C8;
-    border: 5px solid var(--color-secondary);
-    padding: 40px;
+    border: 2px solid var(--color-green);
+    padding: 30px;
+    width: 500px;
     text-align: center;
-    width: 400px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
-
 .form-group {
     margin: 15px 0;
     text-align: left;
 }
-
 .form-group label {
     display: block;
     margin-bottom: 5px;
-    font-weight: 700;
 }
-
 #login-error {
-    color: #D9534F;
+    color: #FF0000;
     font-weight: 700;
     display: none;
 }
 
-/* TERMINAL PRINCIPAL */
+/* --- MAIN TERMINAL LAYOUT --- */
 #tva-terminal {
-    width: 100%;
+    width: 100vw;
     height: 100vh;
-    display: flex;
+    display: none; /* Hidden by default */
     flex-direction: column;
+    border: 3px solid var(--color-green);
 }
 
 header {
-    background-color: var(--color-secondary);
-    color: var(--color-bg);
-    padding: 15px 30px;
+    padding: 10px 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    border-bottom: 2px solid var(--color-green);
+    flex-shrink: 0;
 }
-
-.header-left, .header-right {
-    display: flex;
-    align-items: center;
-}
-
 .header-right button {
     margin-left: 15px;
 }
 
-#fail-safe-button {
-    background-color: #C0392B;
-}
-#fail-safe-button:hover {
-    background-color: #A93226;
+.terminal-body {
+    display: flex;
+    flex-grow: 1;
+    overflow: hidden;
 }
 
-#main-content {
-    flex-grow: 1;
-    padding: 30px;
+/* --- NAVIGATION PANE --- */
+#terminal-nav {
+    width: 250px;
+    flex-shrink: 0;
+    padding: 15px;
+    border-right: 2px solid var(--color-green);
     overflow-y: auto;
 }
-
-.panel {
-    display: none; /* Oculto por defecto */
+#terminal-nav ul {
+    list-style: none;
+}
+#terminal-nav li {
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+#terminal-nav li:hover {
+    background: var(--color-green);
+    color: var(--color-bg);
+    text-shadow: none;
+}
+.nav-role {
+    display: none; /* Hide role nav by default */
 }
 
-.widget-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
+/* --- CONTENT WINDOW --- */
+#terminal-window {
+    flex-grow: 1;
+    padding: 15px;
+    overflow-y: auto;
 }
-
+.screen {
+    display: none; /* All screens hidden by default */
+}
 .widget {
-    background: #EAE0C8;
-    border: 2px solid var(--color-border);
-    padding: 20px;
-    border-radius: 5px;
+    border: 1px solid var(--color-green);
+    padding: 15px;
+    margin-top: 20px;
 }
 
-/* PANELES ESPECÍFICOS */
-#panel-analista table {
+/* --- SPECIFIC SCREENS --- */
+#screen-variants table {
     width: 100%;
     border-collapse: collapse;
 }
-
-#panel-analista th, #panel-analista td {
-    border: 1px solid var(--color-border);
+#screen-variants th, #screen-variants td {
+    border: 1px solid var(--color-green);
     padding: 8px;
     text-align: left;
 }
-
-#panel-analista thead {
-    background-color: var(--color-accent);
-    color: white;
+#screen-variants thead {
+    background-color: var(--color-darkgreen);
 }
 
-.threat-low { color: #27AE60; }
-.threat-high { color: #E67E22; font-weight: 700; }
-.threat-critical { color: #C0392B; font-weight: 700; animation: pulse 1s infinite; }
+.threat-low { color: #FFFF00; }
+.threat-high { color: #FFA500; }
+.threat-critical { color: #FF0000; animation: pulse 1s infinite; }
 
 @keyframes pulse {
     0% { opacity: 1; }
@@ -183,18 +215,38 @@ header {
     100% { opacity: 1; }
 }
 
-.sentencing-buttons button {
-    margin: 10px;
+.btn-guilty { border-color: #FF0000; color: #FF0000; }
+.btn-guilty:hover { background: #FF0000; color: var(--color-bg); }
+.btn-not-guilty { border-color: #00FFFF; color: #00FFFF; }
+.btn-not-guilty:hover { background: #00FFFF; color: var(--color-bg); }
+
+#purge-button {
+    border-color: #FF0000;
+    color: #FF0000;
+    font-size: 24px;
+    padding: 20px;
+    width: 100%;
+    animation: pulse 1.5s infinite;
 }
-.sentencing-buttons button:first-child {
-    background-color: #C0392B;
+
+/* --- FAILSAFE SCREEN --- */
+#failsafe-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #FF0000;
+    color: #000;
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 9999;
+    font-size: 2vw;
+    text-shadow: none;
 }
-.sentencing-buttons button:first-child:hover {
-    background-color: #A93226;
-}
-.sentencing-buttons button:last-child {
-    background-color: var(--color-accent);
-}
-.sentencing-buttons button:last-child:hover {
-    background-color: #5A7461;
+#failsafe-timer {
+    font-size: 10vw;
+    font-weight: bold;
 }
