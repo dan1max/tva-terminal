@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tvaTerminal = document.getElementById('tva-terminal');
     const loginButton = document.getElementById('login-button');
     const logoutButton = document.getElementById('logout-button');
-    const purgeButton = document.getElementById('purge-button');
+    const purgeButton = document.getElementById('purge-button'); // This is grabbed here
     const usernameInput = document.getElementById('username');
     const passwordInput = document.getElementById('password');
     const loginError = document.getElementById('login-error');
@@ -90,7 +90,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Failsafe Logic ---
-    purgeButton.addEventListener('click', ()Failsafe);
+    // Check if the purge button exists on the page (i.e., if creator is logged in)
+    if (purgeButton) {
+        // *** THIS IS THE CORRECTED LINE ***
+        purgeButton.addEventListener('click', triggerFailsafe);
+    }
 
     function triggerFailsafe() {
         const failsafeScreen = document.getElementById('failsafe-screen');
