@@ -1,13 +1,32 @@
-/* --- FONTS & VARIABLES --- */
+/* ---
+TVA TERMINAL STYLESHEET V.3.0
+=================================
+--- */
+
+/* --- [ 1. THEME & COLOR VARIABLES ] --- */
 :root {
-    --font-terminal: 'VT323', monospace;
-    --color-green: #00FF41;
-    --color-darkgreen: #008F11;
-    --color-bg: #000000;
-    --color-glow: rgba(0, 255, 65, 0.75);
+    /* Fonts */
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'Courier Prime', monospace;
+    
+    /* Colors */
+    --color-bg: #F5EFE6;         /* Beige TVA */
+    --color-text: #3D2B1F;       /* Dark Brown */
+    --color-primary: #D97706;    /* Orange TVA */
+    --color-secondary: #5E3A1E;  /* Wood Brown */
+    --color-border: #D1C0A8;     /* Light Brown */
+    --color-accent: #6D8B74;     /* Muted Green */
+    --color-widget-bg: #FFFFFF;
+    --color-widget-bg-alt: #F8F4EB;
+    
+    /* Status Colors */
+    --color-danger: #C0392B;     /* Red */
+    --color-success: #27AE60;    /* Green */
+    --color-warning: #FFA500;    /* Orange */
+    --color-critical: #C0392B;   /* Red */
 }
 
-/* --- GLOBAL RESET & THEME --- */
+/* --- [ 2. GLOBAL RESET & THEME ] --- */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -15,90 +34,86 @@
 }
 
 body {
-    font-family: var(--font-terminal);
+    font-family: var(--font-body);
     background-color: var(--color-bg);
-    color: var(--color-green);
-    text-shadow: 0 0 5px var(--color-glow);
-    font-size: 20px;
+    color: var(--color-text);
+    font-size: 16px;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    overflow: hidden; /* Hide scrollbars */
+    overflow: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: var(--color-green);
-    text-shadow: 0 0 8px var(--color-glow);
-    margin-bottom: 10px;
+    font-family: var(--font-display);
+    color: var(--color-secondary);
+    margin-bottom: 15px;
 }
 
 p {
     margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+ul {
+    margin-left: 20px;
 }
 
 pre {
-    font-family: var(--font-terminal);
-    margin-bottom: 20px;
-    font-size: 16px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    background: #EAE0C8;
+    padding: 10px;
+    border: 1px solid var(--color-border);
+    border-radius: 3px;
+    overflow-x: auto;
 }
 
-/* --- SCANLINE & FLICKER EFFECT --- */
-body::after {
-    content: " ";
-    display: block;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-    background-size: 100% 4px, 3px 100%;
-    z-index: 2;
-    pointer-events: none;
-    animation: flicker 0.1s infinite;
-}
-
-@keyframes flicker {
-  0% { opacity: 1; }
-  50% { opacity: 0.9; }
-  100% { opacity: 1; }
-}
-
-/* --- BUTTONS & INPUTS --- */
-button {
-    font-family: var(--font-terminal);
-    font-size: 18px;
-    color: var(--color-green);
-    text-shadow: 0 0 5px var(--color-glow);
-    background: var(--color-bg);
-    border: 1px solid var(--color-green);
-    padding: 8px 12px;
+/* --- [ 3. BUTTONS & INPUTS ] --- */
+button, .tva-button {
+    font-family: var(--font-body);
+    font-weight: 700;
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 10px 15px;
     cursor: pointer;
+    border-radius: 3px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: background-color 0.2s;
+    text-decoration: none;
+    display: inline-block;
 }
-button:hover {
-    background: var(--color-green);
-    color: var(--color-bg);
-    text-shadow: none;
+button:hover, .tva-button:hover {
+    background-color: #B86504;
 }
 button:disabled {
-    color: var(--color-darkgreen);
-    border-color: var(--color-darkgreen);
-    text-shadow: none;
+    background-color: #999;
     cursor: not-allowed;
 }
 
 input[type="text"], input[type="password"] {
-    font-family: var(--font-terminal);
-    font-size: 20px;
-    background: var(--color-bg);
-    border: 1px solid var(--color-green);
-    color: var(--color-green);
-    padding: 5px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    border: 2px solid var(--color-border);
+    background: var(--color-widget-bg);
+    padding: 8px;
     width: 100%;
+    box-sizing: border-box;
+    border-radius: 3px;
 }
 
-/* --- LOGIN SCREEN --- */
+.tva-logo {
+    width: 150px;
+    margin-bottom: 20px;
+}
+.tva-logo-small {
+    width: 40px;
+    margin-right: 15px;
+}
+
+/* --- [ 4. LOGIN SCREEN ] --- */
 #login-screen {
     width: 100%;
     display: flex;
@@ -106,10 +121,12 @@ input[type="text"], input[type="password"] {
     align-items: center;
 }
 .login-container {
-    border: 2px solid var(--color-green);
-    padding: 30px;
-    width: 500px;
+    background: #EAE0C8;
+    border: 5px solid var(--color-secondary);
+    padding: 40px;
     text-align: center;
+    width: 450px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
 .form-group {
     margin: 15px 0;
@@ -118,29 +135,57 @@ input[type="text"], input[type="password"] {
 .form-group label {
     display: block;
     margin-bottom: 5px;
+    font-weight: 700;
 }
 #login-error {
-    color: #FF0000;
+    color: var(--color-danger);
     font-weight: 700;
     display: none;
 }
+#login-progress p {
+    font-weight: 700;
+}
+.progress-bar {
+    width: 100%;
+    background: var(--color-border);
+    border-radius: 3px;
+    overflow: hidden;
+}
+#progress-bar-inner {
+    width: 0%;
+    height: 20px;
+    background: var(--color-primary);
+    transition: width 0.5s ease-out;
+}
 
-/* --- MAIN TERMINAL LAYOUT --- */
+
+/* --- [ 5. MAIN TERMINAL LAYOUT ] --- */
 #tva-terminal {
     width: 100vw;
     height: 100vh;
     display: none; /* Hidden by default */
     flex-direction: column;
-    border: 3px solid var(--color-green);
+    background: var(--color-bg);
 }
 
 header {
-    padding: 10px 15px;
+    background-color: var(--color-secondary);
+    color: var(--color-bg);
+    padding: 10px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid var(--color-green);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     flex-shrink: 0;
+}
+.header-left, .header-right {
+    display: flex;
+    align-items: center;
+}
+.header-left span {
+    font-size: 16px;
+    font-weight: 700;
+    margin-right: 20px;
 }
 .header-right button {
     margin-left: 15px;
@@ -152,97 +197,136 @@ header {
     overflow: hidden;
 }
 
-/* --- NAVIGATION PANE --- */
+/* --- [ 6. NAVIGATION PANE ] --- */
 #terminal-nav {
-    width: 250px;
+    width: 280px;
     flex-shrink: 0;
-    padding: 15px;
-    border-right: 2px solid var(--color-green);
+    padding: 20px;
+    background: #EAE0C8;
+    border-right: 3px solid var(--color-border);
     overflow-y: auto;
+}
+#terminal-nav h3 {
+    border-bottom: 2px solid var(--color-border);
+    padding-bottom: 10px;
 }
 #terminal-nav ul {
     list-style: none;
+    margin: 0;
+    padding: 0;
 }
 #terminal-nav li {
-    margin-bottom: 5px;
+    margin: 10px 0;
+    padding: 10px;
     cursor: pointer;
+    border-radius: 3px;
+    font-weight: 700;
+    transition: background-color 0.2s, color 0.2s;
 }
 #terminal-nav li:hover {
-    background: var(--color-green);
-    color: var(--color-bg);
-    text-shadow: none;
+    background: var(--color-primary);
+    color: white;
 }
 .nav-role {
     display: none; /* Hide role nav by default */
 }
 
-/* --- CONTENT WINDOW --- */
+/* --- [ 7. CONTENT WINDOW ] --- */
 #terminal-window {
     flex-grow: 1;
-    padding: 15px;
+    padding: 30px;
     overflow-y: auto;
 }
 .screen {
     display: none; /* All screens hidden by default */
+    animation: fadeIn 0.3s ease-in;
 }
-.widget {
-    border: 1px solid var(--color-green);
-    padding: 15px;
-    margin-top: 20px;
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-/* --- SPECIFIC SCREENS --- */
-#screen-variants table {
+.widget {
+    border: 2px solid var(--color-border);
+    background: var(--color-widget-bg);
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+.link-list li {
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--color-primary);
+}
+.link-list li:hover {
+    text-decoration: underline;
+}
+
+/* --- [ 8. SPECIFIC SCREENS & TABLES ] --- */
+
+/* Role-Based Clearance */
+.clearance-2, .clearance-3, .clearance-locked { display: none; }
+body.role-officeworker .clearance-1 { display: table-row; }
+body.role-analyst .clearance-1, body.role-analyst .clearance-2 { display: table-row; }
+body.role-general .clearance-1, body.role-general .clearance-2, body.role-general .clearance-3 { display: table-row; }
+body.role-creator .clearance-1, body.role-creator .clearance-2, body.role-creator .clearance-3, body.role-creator .clearance-locked { display: table-row; }
+
+/* Tables */
+table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 10px;
 }
-#screen-variants th, #screen-variants td {
-    border: 1px solid var(--color-green);
-    padding: 8px;
+th, td {
+    border: 1px solid var(--color-border);
+    padding: 12px;
     text-align: left;
 }
-#screen-variants thead {
-    background-color: var(--color-darkgreen);
+thead {
+    background-color: var(--color-secondary);
+    color: white;
+}
+tbody tr:nth-child(even) {
+    background: var(--color-widget-bg-alt);
+}
+td button {
+    padding: 5px 10px;
+    font-size: 14px;
 }
 
-.threat-low { color: #FFFF00; }
-.threat-high { color: #FFA500; }
-.threat-critical { color: #FF0000; animation: pulse 1s infinite; }
+/* Threat/Status Colors */
+.text-success { color: var(--color-success); font-weight: 700; }
+.text-warning { color: var(--color-warning); font-weight: 700; }
+.text-danger { color: var(--color-danger); font-weight: 700; }
+.text-critical { color: var(--color-critical); font-weight: 700; animation: pulse 1s infinite; }
 
 @keyframes pulse {
-    0% { opacity: 1; }
-    50% { opacity: 0.4; }
-    100% { opacity: 1; }
+    0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; }
 }
 
-.btn-guilty { border-color: #FF0000; color: #FF0000; }
-.btn-guilty:hover { background: #FF0000; color: var(--color-bg); }
-.btn-not-guilty { border-color: #00FFFF; color: #00FFFF; }
-.btn-not-guilty:hover { background: #00FFFF; color: var(--color-bg); }
+/* Judge & Admin Buttons */
+.sentencing-buttons button { margin: 5px; }
+.btn-guilty { background-color: var(--color-danger); }
+.btn-guilty:hover { background-color: #A93226; }
+.btn-not-guilty { background-color: var(--color-accent); }
+.btn-not-guilty:hover { background-color: #5A7461; }
+#purge-button { background-color: var(--color-danger); font-size: 18px; width: 100%; }
+#purge-button:hover { background-color: #A93226; }
 
-#purge-button {
-    border-color: #FF0000;
-    color: #FF0000;
-    font-size: 24px;
-    padding: 20px;
-    width: 100%;
-    animation: pulse 1.5s infinite;
-}
 
-/* --- FAILSAFE SCREEN --- */
+/* --- [ 9. FAILSAFE SCREEN ] --- */
 #failsafe-screen {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: #FF0000;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: var(--color-danger);
     color: #000;
-    display: none; /* Hidden by default */
+    display: none;
     justify-content: center;
     align-items: center;
     text-align: center;
     z-index: 9999;
+    font-family: var(--font-display);
     font-size: 2vw;
     text-shadow: none;
 }
