@@ -150,7 +150,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Show nav items
         if (roleNavMapping[role]) {
             roleNavMapping[role].forEach(navId => {
-                document.getElementById(navId).style.display = 'block';
+                const el = document.getElementById(navId);
+                if (el) el.style.display = 'block';
             });
         }
         
@@ -161,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Remove old listener to avoid duplicates, then add new one
                 purgeButton.replaceWith(purgeButton.cloneNode(true));
                 document.getElementById('purge-button').addEventListener('click', () => {
-                    playAlert();
+                    playAlert(); // *** BUG 2: ALARM SOUND IS ONLY HERE ***
                     triggerFailsafe();
                 });
             }
@@ -172,6 +173,12 @@ document.addEventListener('DOMContentLoaded', () => {
         tvaTerminal.style.display = 'none';
         loginScreen.style.display = 'flex';
         document.body.className = '';
+        
+        // *** BUG 3 FIX: Reset the login form ***
+        loginForm.style.display = 'block';
+        loginProgress.style.display = 'none';
+        progressBarInner.style.width = '0%';
+        loginProgressText.textContent = 'Connecting...';
     });
 
     // --- Core Screen Navigation ---
@@ -190,7 +197,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function showScreen(screenId) {
         allScreens.forEach(screen => screen.style.display = 'none');
-        document.getElementById(screenId).style.display = 'block';
+        const screenToShow = document.getElementById(screenId);
+        if (screenToShow) screenToShow.style.display = 'block';
 
         // Dynamic content loaders
         if (screenId === 'screen-tribunal') loadNewCase();
@@ -249,7 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${variant.alias}</td>
                 <td class="text-${variant.threat.toLowerCase()}">${variant.threat}</td>
                 <td>${variant.status}</td>
-                <td><button class="tva-button" onclick="window.showVariantDetail('${id}')" ${variant.clearance === 4 ? 'disabled' : ''}>View File</button></td>
+                <td><button class="tva-button" onclick="window.showVariantDetail('${id}')" ${variant.clearance === 4 ? 'disabled' : ''}>[VIEW]</button></td>
             `;
             tableBody.appendChild(row);
         }
@@ -260,7 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!variant) return;
         
         // Populate detail screen
-        document.getElementById('variant-detail-title').textContent = `Variant File: ${variant.id}`;
+        document.getElementById('variant-detail-title').textContent = `[ FILE: ${variant.id} ]`;
         document.getElementById('variant-detail-id').textContent = variant.id;
         document.getElementById('variant-detail-alias').textContent = variant.alias;
         document.getElementById('variant-detail-threat').className = `text-${variant.threat.toLowerCase()}`;
@@ -285,7 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${agent.id}</td>
                 <td>${agent.rank}</td>
                 <td class="${statusClass}">${agent.status}</td>
-                <td><button class="tva-button" onclick="window.showPersonnelDetail('${id}')">View File</button></td>
+                <td><button class="tva-button" onclick="window.showPersonnelDetail('${id}')">[VIEW]</button></td>
             `;
             tableBody.appendChild(row);
         }
@@ -296,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!agent) return;
         
         // Populate detail screen
-        document.getElementById('personnel-detail-title').textContent = `Personnel File: ${agent.id}`;
+        document.getElementById('personnel-detail-title').textContent = `[ FILE: ${agent.id} ]`;
         document.getElementById('personnel-detail-id').textContent = agent.id;
         document.getElementById('personnel-detail-rank').textContent = agent.rank;
         document.getElementById('personnel-detail-status').className = agent.status === 'ACTIVE' ? 'text-success' : 'text-danger';
@@ -306,7 +314,7 @@ document.addEventListener('DOMContentLoaded', () => {
         recordList.innerHTML = ''; // Clear list
         agent.record.forEach(item => {
             const li = document.createElement('li');
-            li.textContent = item;
+            li.textContent = `> ${item}`;
             recordList.appendChild(li);
         });
         
@@ -320,7 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
         toc.innerHTML = ''; // Clear list
         TVA_DATA.handbook.forEach(chapter => {
             const li = document.createElement('li');
-            li.textContent = chapter;
+            li.textContent = `> ${chapter}`;
             li.onclick = () => alert('File is corrupted or currently in use by another agent.');
             toc.appendChild(li);
         });
@@ -346,7 +354,7 @@ function clockOut() {
 }
 
 function sentence(verdict) {
-    if(verdict === 'guilty') window.playAlert();
+    // *** BUG 2 FIX: Removed alarm sound from here ***
     const caseId = document.getElementById('case-id').textContent;
     alert(`Variant ${caseId} sentenced as: ${verdict.toUpperCase()}. Case file closed.`);
     window.loadNewCase(); // Load the next case
