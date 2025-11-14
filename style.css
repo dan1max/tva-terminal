@@ -1,0 +1,200 @@
+/* FUENTES */
+:root {
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'Courier Prime', monospace;
+    
+    --color-bg: #F5EFE6; /* Beige TVA */
+    --color-text: #3D2B1F; /* Marrón oscuro */
+    --color-primary: #D97706; /* Naranja TVA */
+    --color-secondary: #5E3A1E; /* Marrón madera */
+    --color-accent: #6D8B74; /* Verde oficina */
+    --color-border: #D1C0A8;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+h1, h2, h3 {
+    font-family: var(--font-display);
+    color: var(--color-secondary);
+}
+
+button {
+    font-family: var(--font-body);
+    font-weight: 700;
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 3px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #B86504;
+}
+
+input[type="text"], input[type="password"] {
+    font-family: var(--font-body);
+    border: 2px solid var(--color-border);
+    background: #ffffff;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 3px;
+}
+
+.tva-logo {
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+.tva-logo-small {
+    width: 40px;
+    margin-right: 15px;
+}
+
+/* PANTALLA DE LOGIN */
+#login-screen {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    background: #EAE0C8;
+    border: 5px solid var(--color-secondary);
+    padding: 40px;
+    text-align: center;
+    width: 400px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.form-group {
+    margin: 15px 0;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+#login-error {
+    color: #D9534F;
+    font-weight: 700;
+    display: none;
+}
+
+/* TERMINAL PRINCIPAL */
+#tva-terminal {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background-color: var(--color-secondary);
+    color: var(--color-bg);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.header-left, .header-right {
+    display: flex;
+    align-items: center;
+}
+
+.header-right button {
+    margin-left: 15px;
+}
+
+#fail-safe-button {
+    background-color: #C0392B;
+}
+#fail-safe-button:hover {
+    background-color: #A93226;
+}
+
+#main-content {
+    flex-grow: 1;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.panel {
+    display: none; /* Oculto por defecto */
+}
+
+.widget-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.widget {
+    background: #EAE0C8;
+    border: 2px solid var(--color-border);
+    padding: 20px;
+    border-radius: 5px;
+}
+
+/* PANELES ESPECÍFICOS */
+#panel-analista table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#panel-analista th, #panel-analista td {
+    border: 1px solid var(--color-border);
+    padding: 8px;
+    text-align: left;
+}
+
+#panel-analista thead {
+    background-color: var(--color-accent);
+    color: white;
+}
+
+.threat-low { color: #27AE60; }
+.threat-high { color: #E67E22; font-weight: 700; }
+.threat-critical { color: #C0392B; font-weight: 700; animation: pulse 1s infinite; }
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.4; }
+    100% { opacity: 1; }
+}
+
+.sentencing-buttons button {
+    margin: 10px;
+}
+.sentencing-buttons button:first-child {
+    background-color: #C0392B;
+}
+.sentencing-buttons button:first-child:hover {
+    background-color: #A93226;
+}
+.sentencing-buttons button:last-child {
+    background-color: var(--color-accent);
+}
+.sentencing-buttons button:last-child:hover {
+    background-color: #5A7461;
+}
