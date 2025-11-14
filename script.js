@@ -1,4 +1,3 @@
-// Wait for the DOM to load
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- Simulated Database ---
@@ -16,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const tvaTerminal = document.getElementById('tva-terminal');
     const loginButton = document.getElementById('login-button');
     const logoutButton = document.getElementById('logout-button');
-    const purgeButton = document.getElementById('purge-button'); // This is grabbed here
+    // We will get 'purgeButton' later, only if creator logs in
     const usernameInput = document.getElementById('username');
     const passwordInput = document.getElementById('password');
     const loginError = document.getElementById('login-error');
@@ -80,8 +79,13 @@ document.addEventListener('DOMContentLoaded', () => {
             roleNavItems.forEach(item => {
                 item.style.display = 'block';
             });
+            
+            // **IMPROVEMENT**: Find and attach the purge button listener ONLY after creator logs in
+            const purgeButton = document.getElementById('purge-button');
+            if (purgeButton) {
+                purgeButton.addEventListener('click', triggerFailsafe);
+            }
         }
-        // Office worker sees no special nav items
     }
     
     logoutButton.addEventListener('click', () => {
@@ -90,12 +94,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Failsafe Logic ---
-    // Check if the purge button exists on the page (i.e., if creator is logged in)
-    if (purgeButton) {
-        // *** THIS IS THE CORRECTED LINE ***
-        purgeButton.addEventListener('click', triggerFailsafe);
-    }
-
     function triggerFailsafe() {
         const failsafeScreen = document.getElementById('failsafe-screen');
         const failsafeTimer = document.getElementById('failsafe-timer');
@@ -129,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// --- Global Widget Functions ---
+// --- Global Widget Functions (These are outside DOMContentLoaded) ---
 function clockIn() {
     document.getElementById('clock-status').textContent = 'ON DUTY';
     alert('Clocked In. For all time. Always.');
