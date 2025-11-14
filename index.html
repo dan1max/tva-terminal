@@ -7,9 +7,12 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
+
+    <audio id="audio-click" src="./click.mp3" preload="auto"></audio>
+    <audio id="audio-alert" src="./alert.mp3" preload="auto"></audio>
 
     <div id="failsafe-screen">
         <div class="failsafe-content">
@@ -24,218 +27,228 @@
 
     <div id="login-screen">
         <div class="login-container">
-            <pre>
-    ████████╗██╗   ██╗ █████╗    
-    ╚══██╔══╝██║   ██║██╔══██╗   
-       ██║   ██║   ██║███████║   
-       ██║   ██║   ██║██╔══██║   
-       ██║   ╚██████╔╝██║  ██║   
-       ╚═╝    ╚═════╝ ╚═╝  ╚═╝   
-    </pre>
-            <h1>TIME VARIANCE AUTHORITY</h1>
-            <h2>AGENT TERMINAL LOGIN</h2>
-            <p id="login-error">ACCESS DENIED. VARIANCE DETECTED.</p>
-            <div class="form-group">
-                <label for="username">> AGENT ID:</label>
-                <input type="text" id="username" name="username">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/TVA_Logo.svg/1200px-TVA_Logo.svg.png" alt="TVA Logo" class="tva-logo">
+            <h1>Time Variance Authority</h1>
+            <h2>Agent Terminal Login</h2>
+            
+            <div id="login-progress" style="display: none;">
+                <p id="login-progress-text">Connecting...</p>
+                <div class="progress-bar">
+                    <div id="progress-bar-inner"></div>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="password">> PASSWORD:</label>
-                <input type="password" id="password" name="password">
-            </div>
-            <button id="login-button">[ INITIATE SESSION ]</button>
+
+            <form id="login-form">
+                <p id="login-error">ACCESS DENIED. VARIANCE DETECTED.</p>
+                <div class="form-group">
+                    <label for="username">Agent ID:</label>
+                    <input type="text" id="username" name="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password">
+                </div>
+                <button type="submit" id="login-button">Access Terminal</button>
+            </form>
         </div>
     </div>
 
     <div id="tva-terminal">
         <header>
             <div class="header-left">
-                TVA TERMINAL V. 7.21 - // AGENT: <span id="agent-id"></span> // STATUS: [ACTIVE]
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/TVA_Logo.svg/1200px-TVA_Logo.svg.png" alt="TVA Logo" class="tva-logo-small">
+                <span>Agent: <span id="agent-id"></span></span>
+                <span>Status: <span class="text-success">[ ACTIVE ]</span></span>
             </div>
             <div class="header-right">
-                [ FOR ALL TIME. ALWAYS. ]
-                <button id="logout-button">[ LOGOUT ]</button>
+                <button id="logout-button">Logout</button>
             </div>
         </header>
         
         <div class="terminal-body">
             <nav id="terminal-nav">
-                <h3>[ NAVIGATION ]</h3>
+                <h3>Navigation</h3>
                 <ul id="nav-list">
-                    <li onclick="showScreen('screen-home')">> HOME_</li>
-                    <li onclick="showScreen('screen-directory')">> SYS_DIRECTORY_</li>
-                    <li onclick="showScreen('screen-commissary')">> COMMISSARY_</li>
+                    <li data-screen="screen-home">Home</li>
+                    <li data-screen="screen-directory">System Directory</li>
+                    <li data-screen="screen-commissary">Commissary Menu</li>
+                    <li data-screen="screen-handbook">TVA Handbook</li>
                     
-                    <li id="nav-minuteman" class="nav-role" onclick="showScreen('screen-minuteman')">> MINUTEMAN_OPS_</li>
-                    <li id="nav-analyst" class="nav-role" onclick="showScreen('screen-variants')">> VARIANT_FILES_</li>
-                    <li id="nav-judge" class="nav-role" onclick="showScreen('screen-tribunal')">> TRIBUNAL_</li>
-                    <li id="nav-general" class="nav-role" onclick="showScreen('screen-tactical')">> TACTICAL_CMD_</li>
-                    <li id="nav-creator" class="nav-role" onclick="showScreen('screen-creator')">> ADMIN_PROTOCOLS_</li>
+                    <li id="nav-minuteman" class="nav-role" data-screen="screen-minuteman">Minuteman Ops</li>
+                    <li id="nav-analyst" class="nav-role" data-screen="screen-variants">Variant Files</li>
+                    <li id="nav-judge" class="nav-role" data-screen="screen-tribunal">Tribunal</li>
+                    <li id="nav-personnel" class="nav-role" data-screen="screen-personnel">Personnel Files</li>
+                    <li id="nav-general" class="nav-role" data-screen="screen-tactical">Tactical Command</li>
+                    <li id="nav-creator" class="nav-role" data-screen="screen-creator">Admin Protocols</li>
                 </ul>
             </nav>
 
             <main id="terminal-window">
                 
-                <div id="screen-home" class="screen">
-                    <h2>[ WELCOME, AGENT ]</h2>
-                    <p>You are accessing a secure Time Variance Authority terminal.</p>
-                    <p>Unauthorized access is a Class-4 Nexus Crime and will result in immediate pruning.</p>
+                <section id="screen-home" class="screen">
+                    <h2>Welcome, Agent</h2>
+                    <p>You are accessing a secure Time Variance Authority terminal. Unauthorized access is a Class-4 Nexus Crime and will result in immediate pruning.</p>
                     <div class="widget">
-                        <h3>[ MESSAGE OF THE DAY ]</h3>
-                        <p>> REMINDER: All reports must be filed in triplicate using Form 3B-Alpha.</p>
-                        <p>> The commissary is serving "Josta" brand soda today.</p>
-                        <p>> Be vigilant. The timeline does not protect itself.</p>
+                        <h3>Message of the Day</h3>
+                        <ul>
+                            <li>Reminder: All reports must be filed in triplicate using Form 3B-Alpha.</li>
+                            <li>The commissary is serving Josta brand soda today.</li>
+                            <li>Be vigilant. The timeline does not protect itself.</li>
+                        </ul>
                     </div>
-                </div>
+                </section>
 
-                <div id="screen-directory" class="screen">
-                    <h2>[ SYSTEM DIRECTORY ]</h2>
-                    <pre>
+                <section id="screen-directory" class="screen">
+                    <h2>System Directory</h2>
+                    <div class="widget">
+                        <pre>
 /TVA/
  ├─ /ADMIN/
  │  ├─ He_Who_Remains.log (LOCKED)
  │  └─ Time_Keepers.cfg (LOCKED)
  ├─ /VARIANTS/
- │  ├─ /LOKI/
- │  │  ├─ L1130.var
- │  │  ├─ S8812.var
- │  │  └─ ... (2,105 more files)
- │  ├─ K4404.var
- │  └─ ... (9,141 more files)
+ │  ├─ ... (9,141 files)
  ├─ /DOCUMENTS/
  │  ├─ TVA_Handbook.pdf
  │  └─ Sacred_Timeline_Accord.txt
+ ├─ /PERSONNEL/
+ │  ├─ ... (4,208 files)
  └─ /UTIL/
     ├─ caf_menu.txt
     └─ system_recal.exe
-                    </pre>
-                </div>
-
-                <div id="screen-commissary" class="screen">
-                    <h2>[ COMMISSARY MENU ]</h2>
-                    <div class="widget">
-                        <h3>[ DAILY SPECIALS ]</h3>
-                        <p>> MONDAY....: Key Lime Pie (Green)</p>
-                        <p>> TUESDAY...: Jell-O (Green)</p>
-                        <p>> WEDNESDAY.: Cereal (Assorted)</p>
-                        <p>> THURSDAY..: Key Lime Pie (Green)</p>
-                        <p>> FRIDAY....: Prune Juice (Special)</p>
-                        <p>> BEVERAGE..: Josta Soda, Coffee (Expired)</p>
+                        </pre>
                     </div>
-                </div>
+                </section>
 
-                <div id="screen-minuteman" class="screen">
-                    <h2>[ MINUTEMAN OPERATIONS ]</h2>
+                <section id="screen-commissary" class="screen">
+                    <h2>Commissary Menu</h2>
                     <div class="widget">
-                        <h3>[ DUTY STATUS ]</h3>
-                        <p>CURRENT STATUS: <span id="clock-status">OFF DUTY</span></p>
-                        <button onclick="clockIn()">[ CLOCK IN ]</button>
-                        <button onclick="clockOut()">[ CLOCK OUT ]</button>
+                        <h3>Daily Specials</h3>
+                        <p><strong>MONDAY:</strong> Key Lime Pie (Green)</p>
+                        <p><strong>TUESDAY:</strong> Jell-O (Green)</p>
+                        <p><strong>WEDNESDAY:</strong> Cereal (Assorted)</p>
+                        <p><strong>THURSDAY:</strong> Key Lime Pie (Green)</p>
+                        <p><strong>FRIDAY:</strong> Prune Juice (Special)</p>
+                        <p><strong>BEVERAGE:</strong> Josta Soda, Coffee (Expired)</p>
                     </div>
-                    <div class="widget">
-                        <h3>[ ACTIVE MISSIONS ]</h3>
-                        <p>> RESPONSE REQUIRED: Sector 46-B (1985).</p>
-                        <p>> PATROL: Sacred Timeline, Segment 11A.</p>
-                    </div>
-                </div>
+                </section>
 
-                <div id="screen-variants" class="screen">
-                    <h2>[ VARIANT FILE DATABASE ]</h2>
-                    <table>
+                <section id="screen-handbook" class="screen">
+                    <h2>TVA Handbook</h2>
+                    <div class="widget">
+                        <h3>Table of Contents</h3>
+                        <ul id="handbook-toc" class="link-list">
+                            </ul>
+                    </div>
+                </section>
+
+                <section id="screen-minuteman" class="screen">
+                    <h2>Minuteman Operations</h2>
+                    <div class="widget">
+                        <h3>Duty Status</h3>
+                        <p>Current Status: <span id="clock-status">OFF DUTY</span></p>
+                        <button class="tva-button" onclick="clockIn()">[ Clock In ]</button>
+                        <button class="tva-button" onclick="clockOut()">[ Clock Out ]</button>
+                    </div>
+                </section>
+
+                <section id="screen-variants" class="screen">
+                    <h2>Variant File Database</h2>
+                    <p>Accessing files based on your security clearance...</p>
+                    <table id="variant-table">
                         <thead>
                             <tr>
-                                <th>VARIANT ID</th>
-                                <th>TYPE</th>
-                                <th>ORIGIN</th>
-                                <th>THREAT</th>
-                                <th>ACTION</th>
+                                <th>Variant ID</th>
+                                <th>Alias</th>
+                                <th>Threat</th>
+                                <th>Status</th>
+                                <th>File</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>L1130 (Loki)</td>
-                                <td>Loki</td>
-                                <td>Gobi Desert (2012)</td>
-                                <td class="threat-high">HIGH</td>
-                                <td><button onclick="showScreen('screen-variant-detail')">[ VIEW FILE ]</button></td>
-                            </tr>
-                            <tr>
-                                <td>S8812 (Sylvie)</td>
-                                <td>Loki</td>
-                                <td>Asgard (1999)</td>
-                                <td class="threat-high">CRITICAL</td>
-                                <td><button>[ VIEW FILE ]</button></td>
-                            </tr>
-                            <tr>
-                                <td>K4404 (Kang)</td>
-                                <td>Unknown</td>
-                                <td>Unknown</td>
-                                <td class="threat-critical">!! SACRED !!</td>
-                                <td><button disabled>[ LOCKED ]</button></td>
-                            </tr>
-                            <tr>
-                                <td>M2021 (Mobius)</td>
-                                <td>Mobius</td>
-                                <td>Earth (2005)</td>
-                                <td class="threat-low">LOW</td>
-                                <td><button>[ VIEW FILE ]</button></td>
-                            </tr>
-                        </tbody>
+                        <tbody id="variant-table-body">
+                            </tbody>
                     </table>
-                </div>
+                </section>
 
-                <div id="screen-variant-detail" class="screen">
-                    <h2>[ FILE: VARIANT L1130 ]</h2>
-                    <button onclick="showScreen('screen-variants')">[ < BACK TO LIST ]</button>
+                <section id="screen-variant-detail" class="screen">
+                    <button class="tva-button" data-screen="screen-variants">[ < BACK TO LIST ]</button>
+                    <h2 id="variant-detail-title">Variant File: ...</h2>
                     <div class="widget">
-                        <h3>[ VARIANT PROFILE ]</h3>
-                        <p>> ID: L1130</p>
-                        <p>> ALIAS: Loki Laufeyson</p>
-                        <p>> ORIGIN: Asgard (Variant)</p>
-                        <p>> NEXUS EVENT: Escaped custody with the Tesseract in 2012.</p>
-                        <p>> STATUS: In TVA custody. Pending sentencing.</p>
+                        <p><strong>ID:</strong> <span id="variant-detail-id">...</span></p>
+                        <p><strong>Alias:</strong> <span id="variant-detail-alias">...</span></p>
+                        <p><strong>Threat Level:</strong> <span id="variant-detail-threat">...</span></p>
+                        <p><strong>Status:</strong> <span id="variant-detail-status">...</span></p>
+                        <h3>Nexus Event</h3>
+                        <p id="variant-detail-nexus">...</p>
+                        <h3>TVA Notes</h3>
+                        <p id="variant-detail-notes">...</p>
                     </div>
-                </div>
+                </section>
 
-                <div id="screen-tribunal" class="screen">
-                    <h2>[ TVA TRIBUNAL - CASE 352-A ]</h2>
+                <section id="screen-tribunal" class="screen">
+                    <h2>TVA Tribunal</h2>
                     <div class="widget">
-                        <h3>[ DEFENDANT: VARIANT L1130 ]</h3>
-                        <p>> CHARGES: Crimes against the Sacred Timeline.</p>
-                        <p>> STATUS: Pending Sentence.</p>
-                        <p>> PLEA: ...it's complicated.</p>
+                        <h3>Defendant: Variant <span id="case-id">...</span></h3>
+                        <p><strong>Charge:</strong> <span id="case-charge">...</span></p>
+                        <p><strong>Status:</strong> Pending Sentence.</p>
+                        <p><strong>Plea:</strong> Not Guilty</p>
                         <div class="sentencing-buttons">
-                            <button class="btn-guilty" onclick="sentence('guilty')">[ SENTENCE: GUILTY (PRUNE) ]</button>
-                            <button class="btn-not-guilty" onclick="sentence('not-guilty')">[ SENTENCE: NOT GUILTY (RESET) ]</button>
+                            <button class="tva-button btn-guilty" onclick="sentence('guilty')">[ SENTENCE: GUILTY (PRUNE) ]</button>
+                            <button class="tva-button btn-not-guilty" onclick="sentence('not-guilty')">[ SENTENCE: NOT GUILTY (RESET) ]</button>
                         </div>
                     </div>
-                </div>
+                </section>
 
-                <div id="screen-tactical" class="screen">
-                    <h2>[ TACTICAL COMMAND ]</h2>
+                <section id="screen-personnel" class="screen">
+                    <h2>Personnel Files</h2>
+                    <p>Accessing active agent files...</p>
+                    <table id="personnel-table">
+                        <thead>
+                            <tr>
+                                <th>Agent ID</th>
+                                <th>Rank</th>
+                                <th>Status</th>
+                                <th>File</th>
+                            </tr>
+                        </thead>
+                        <tbody id="personnel-table-body">
+                            </tbody>
+                    </table>
+                </section>
+
+                <section id="screen-personnel-detail" class="screen">
+                    <button class="tva-button" data-screen="screen-personnel">[ < BACK TO LIST ]</button>
+                    <h2 id="personnel-detail-title">Personnel File: ...</h2>
                     <div class="widget">
-                        <h3>[ ACTIVE TEMP-DOORS ]</h3>
-                        <p>> DOOR 1: 1888 - London, UK</p>
-                        <p>> DOOR 2: 3050 - New Asgard</p>
-                        <p>> DOOR 3: 1999 - Roxxcart</p>
+                        <p><strong>ID:</strong> <span id="personnel-detail-id">...</span></p>
+                        <p><strong>Rank:</strong> <span id="personnel-detail-rank">...</span></p>
+                        <p><strong>Status:</strong> <span id="personnel-detail-status">...</span></p>
+                        <h3>Service Record</h3>
+                        <ul id="personnel-detail-record">
+                            </ul>
                     </div>
+                </section>
+
+                <section id="screen-tactical" class="screen">
+                    <h2>Tactical Command</h2>
                     <div class="widget">
-                        <h3>[ ACTIVE MINUTEMEN ]</h3>
-                        <p>> AGENT B-15 (ON MISSION)</p>
-                        <p>> AGENT C-20 (ON PATROL)</p>
-                        <p>> AGENT X-5 (STANDBY)</p>
+                        <h3>Active Temp-Doors</h3>
+                        <ul>
+                            <li>Door 1: 1888 - London, UK</li>
+                            <li>Door 2: 3050 - New Asgard</li>
+                            <li>Door 3: 1999 - Roxxcart</li>
+                        </ul>
                     </div>
-                </div>
+                </section>
                 
-                <div id="screen-creator" class="screen">
-                    <h2>[ ADMIN PROTOCOLS ]</h2>
+                <section id="screen-creator" class="screen">
+                    <h2>Admin Protocols</h2>
                     <div class="widget">
-                        <h3>[ SYSTEM INTEGRITY ]</h3>
+                        <h3>System Integrity</h3>
                         <p>WARNING: Activating this protocol is irreversible and will purge all temporal data on this terminal node.</p>
-                        <p>This is a Class-1 action. Do not proceed without authorization from He Who Remains.</p>
-                        <button id="purge-button">[ INITIATE PURGE PROTOCOL ]</button>
+                        <button id="purge-button" class="tva-button">[ INITIATE PURGE PROTOCOL ]</button>
                     </div>
-                </div>
+                </section>
                 
             </main>
         </div>
