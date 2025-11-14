@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TVA - Terminal de Acceso</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="login-screen">
+        <div class="login-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/TVA_Logo.svg/1200px-TVA_Logo.svg.png" alt="TVA Logo" class="tva-logo">
+            <h1>Terminal de la Autoridad de Variación Temporal</h1>
+            <p id="login-error">Credenciales incorrectas. La variación no está permitida.</p>
+            <div class="form-group">
+                <label for="username">ID de Agente:</label>
+                <input type="text" id="username" name="username">
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password">
+            </div>
+            <button id="login-button">Acceder</button>
+        </div>
+    </div>
+
+    <div id="tva-terminal" style="display: none;">
+        <header>
+            <div class="header-left">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/TVA_Logo.svg/1200px-TVA_Logo.svg.png" alt="TVA Logo" class="tva-logo-small">
+                <span>Terminal de Agente: <span id="agent-id"></span></span>
+            </div>
+            <div class="header-right">
+                <button id="fail-safe-button" style="display:none;">FAIL SAFE</button>
+                <button id="logout-button">Cerrar Sesión</button>
+            </div>
+        </header>
+
+        <main id="main-content">
+            <div id="panel-oficinista" class="panel">
+                <h2>Portal del Trabajador</h2>
+                <p>Bienvenido, agente. Recuerde completar su papeleo antes del final del ciclo.</p>
+                <div class="widget">
+                    <h3>Recordatorios del Día</h3>
+                    <ul>
+                        <li>Revisar el informe 3B-Alfa.</li>
+                        <li>Archivar los archivos de la Variante L1130.</li>
+                        <li>Asistir a la reunión de "No pises la Sagrada Línea Temporal".</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="panel-soldado" class="panel">
+                <h2>Panel de Minuteman</h2>
+                <div class="widget-grid">
+                    <div class="widget">
+                        <h3>Estado de Servicio</h3>
+                        <p>Estado actual: <span id="clock-status">Fuera de servicio</span></p>
+                        <button onclick="clockIn()">Fichar (Clock In)</button>
+                        <button onclick="clockOut()">Retirarse (Clock Out)</button>
+                    </div>
+                    <div class="widget">
+                        <h3>Misiones Activas</h3>
+                        <p>Respuesta requerida en Sector 46-B (1985).</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="panel-analista" class="panel">
+                <h2>Consola de Análisis de Variantes</h2>
+                <div class="widget">
+                    <h3>Variantes Pendientes de Revisión</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID de Variante</th>
+                                <th>Tipo</th>
+                                <th>Origen</th>
+                                <th>Nivel de Amenaza</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>L1130 (Loki)</td>
+                                <td>Loki</td>
+                                <td>Desierto de Gobi (2012)</td>
+                                <td class="threat-high">Alto</td>
+                            </tr>
+                            <tr>
+                                <td>S8812 (Sylvie)</td>
+                                <td>Loki</td>
+                                <td>Asgard (1999)</td>
+                                <td class="threat-high">Crítico</td>
+                            </tr>
+                            <tr>
+                                <td>K4404 (Kang)</td>
+                                <td>Desconocido</td>
+                                <td>Desconocido</td>
+                                <td class="threat-critical">¡SAGRADO!</td>
+                            </tr>
+                            <tr>
+                                <td>M2021 (Mobius)</td>
+                                <td>Mobius</td>
+                                <td>Tierra (2005)</td>
+                                <td class="threat-low">Bajo</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="panel-juez" class="panel">
+                <h2>Tribunal de la TVA</h2>
+                <div class="widget">
+                    <h3>Caso de Variante: L1130</h3>
+                    <p><strong>Cargos:</strong> Crímenes contra la Sagrada Línea Temporal.</p>
+                    <p><strong>Estado:</strong> Pendiente de sentencia.</p>
+                    <div class="sentencing-buttons">
+                        <button onclick="sentence('guilty')">Sentenciar: Culpable</button>
+                        <button onclick="sentence('not-guilty')">Sentenciar: No Culpable</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="panel-general" class="panel">
+                <h2>Centro de Mando Táctico</h2>
+                <div class="widget-grid">
+                    <div class="widget">
+                        <h3>Puertas Temporales Abiertas</h3>
+                        <ul>
+                            <li>Puerta 1: 1888 - Londres, UK</li>
+                            <li>Puerta 2: 3050 - Nueva Asgard</li>
+                            <li>Puerta 3: 1999 - Roxxcart</li>
+                        </ul>
+                    </div>
+                    <div class="widget">
+                        <h3>Soldados (Minutemen) Activos</h3>
+                        <ul>
+                            <li>Agente B-15 (En misión)</li>
+                            <li>Agente C-20 (En patrulla)</li>
+                            <li>Agente X-5 (Standby)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
