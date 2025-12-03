@@ -3,258 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TVA - TERMINAL ACCESS</title>
+    <title>TVA - CHRONOMONITOR V.9</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Playfair+Display:wght@700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <audio id="audio-click" src="./click.mp3" preload="auto"></audio>
     <audio id="audio-alert" src="./alert.mp3" preload="auto"></audio>
 
-    <div id="failsafe-screen">
-        <div class="failsafe-content">
-            <h1>!! CRITICAL SYSTEM ALERT !!</h1>
-            <p>SACRED TIMELINE INTEGRITY PURGE INITIATED</p>
-            <p>ALL NEXUS EVENTS WILL BE RESET</p>
-            <p>TIME-LOCKDOWN IN:</p>
-            <div id="failsafe-timer">10</div>
-            <p id="failsafe-message"></p>
-        </div>
-    </div>
-
     <div id="login-screen">
         <div class="login-container">
-            <pre>
-    ████████╗██╗   ██╗ █████╗    
-    ╚══██╔══╝██║   ██║██╔══██╗   
-       ██║   ██║   ██║███████║   
-       ██║   ██║   ██║██╔══██║   
-       ██║   ╚██████╔╝██║  ██║   
-       ╚═╝    ╚═════╝ ╚═╝  ╚═╝   
-    </pre>
-            <h1>TIME VARIANCE AUTHORITY</h1>
-            <h2>AGENT TERMINAL LOGIN</h2>
-            
-            <div id="login-progress" style="display: none;">
-                <p id="login-progress-text">Connecting...</p>
-                <div class="progress-bar">
-                    <div id="progress-bar-inner"></div>
-                </div>
+            <div class="ascii-logo">
+<pre>
+  _______      __   
+ |__   __|    /  \  
+    | | \ \  / /\ \ 
+    | |  \ \/ /  \ \
+    |_|   \__/    \_\
+</pre>
             </div>
-
+            <h1>TIME VARIANCE AUTHORITY</h1>
+            <h2>SECURE ARCHIVE ACCESS</h2>
+            
             <form id="login-form">
-                <p id="login-error">ACCESS DENIED. VARIANCE DETECTED.</p>
+                <p id="login-error">>> ERROR: TEMPORAL AURA MISMATCH <<</p>
                 <div class="form-group">
-                    <label for="username">> AGENT ID:</label>
-                    <input type="text" id="username" name="username">
+                    <label for="username">AGENT ID_</label>
+                    <input type="text" id="username" autocomplete="off">
                 </div>
                 <div class="form-group">
-                    <label for="password">> PASSWORD:</label>
-                    <input type="password" id="password" name="password">
+                    <label for="password">PASSCODE_</label>
+                    <input type="password" id="password">
                 </div>
-                <button type="submit" id="login-button">[ INITIATE SESSION ]</button>
+                <button type="submit" id="login-button">INITIALIZE LINK</button>
             </form>
         </div>
     </div>
 
     <div id="tva-terminal">
-        <header>
-            <div class="header-left">
-                TVA TERMINAL V. 7.21 - // AGENT: <span id="agent-id"></span> // STATUS: <span class="text-success">[ACTIVE]</span>
-            </div>
-            <div class="header-right">
-                [ FOR ALL TIME. ALWAYS. ]
-                <button id="logout-button">[ LOGOUT ]</button>
-            </div>
-        </header>
         
-        <div class="terminal-body">
-            <nav id="terminal-nav">
-                <h3>[ NAVIGATION ]</h3>
-                <ul id="nav-list">
-                    <li data-screen="screen-home">> HOME_</li>
-                    <li data-screen="screen-directory">> SYS_DIRECTORY_</li>
-                    <li data-screen="screen-commissary">> COMMISSARY_</li>
-                    <li data-screen="screen-handbook">> TVA_HANDBOOK_</li>
-                    
-                    <li id="nav-minuteman" class="nav-role" data-screen="screen-minuteman">> MINUTEMAN_OPS_</li>
-                    <li id="nav-analyst" class="nav-role" data-screen="screen-variants">> VARIANT_FILES_</li>
-                    <li id="nav-judge" class="nav-role" data-screen="screen-tribunal">> TRIBUNAL_</li>
-                    <li id="nav-personnel" class="nav-role" data-screen="screen-personnel">> PERSONNEL_FILES_</li>
-                    <li id="nav-tactical" class="nav-role" data-screen="screen-tactical">> TACTICAL_CMD_</li>
-                    <li id="nav-creator" class="nav-role" data-screen="screen-creator">> ADMIN_PROTOCOLS_</li>
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                TVA-OS v.9.1.1
+                <br>
+                <span>USER: <span id="user-display">GUEST</span></span>
+            </div>
+            <ul id="nav-list">
                 </ul>
-            </nav>
+            <div class="sidebar-footer">
+                <button id="logout-button">[ TERMINATE SESSION ]</button>
+            </div>
+        </nav>
 
-            <main id="terminal-window">
-                
-                <section id="screen-home" class="screen">
-                    <h2>[ WELCOME, AGENT ]</h2>
-                    <p>You are accessing a secure Time Variance Authority terminal.</p>
-                    <p>Unauthorized access is a Class-4 Nexus Crime and will result in immediate pruning.</p>
-                    <div class="widget">
-                        <h3>[ MESSAGE OF THE DAY ]</h3>
-                        <p>> REMINDER: All reports must be filed in triplicate using Form 3B-Alpha.</p>
-                        <p>> The commissary is serving "Josta" brand soda today.</p>
-                        <p>> Be vigilant. The timeline does not protect itself.</p>
-                    </div>
-                </section>
+        <main id="main-content">
+            <div id="wiki-container">
+                </div>
+        </main>
 
-                <section id="screen-directory" class="screen">
-                    <h2>[ SYSTEM DIRECTORY ]</h2>
-                    <div class="widget">
-                        <pre>
-/TVA/
- ├─ /ADMIN/
- │  ├─ He_Who_Remains.log (LOCKED)
- │  └─ Time_Keepers.cfg (LOCKED)
- ├─ /VARIANTS/
- │  ├─ ... (9,141 files)
- ├─ /DOCUMENTS/
- │  ├─ TVA_Handbook.pdf
- │  └─ Sacred_Timeline_Accord.txt
- ├─ /PERSONNEL/
- │  ├─ ... (4,208 files)
- └─ /UTIL/
-    ├─ caf_menu.txt
-    └─ system_recal.exe
-                        </pre>
-                    </div>
-                </section>
-
-                <section id="screen-commissary" class="screen">
-                    <h2>[ COMMISSARY MENU ]</h2>
-                    <div class="widget">
-                        <h3>[ DAILY SPECIALS ]</h3>
-                        <p>> MONDAY....: Key Lime Pie (Green)</p>
-                        <p>> TUESDAY...: Jell-O (Green)</p>
-                        <p>> WEDNESDAY.: Cereal (Assorted)</p>
-                        <p>> THURSDAY..: Key Lime Pie (Green)</p>
-                        <p>> FRIDAY....: Prune Juice (Special)</p>
-                        <p>> BEVERAGE..: Josta Soda, Coffee (Expired)</p>
-                    </div>
-                </section>
-
-                <section id="screen-handbook" class="screen">
-                    <h2>[ TVA HANDBOOK ]</h2>
-                    <div class="widget">
-                        <h3>[ TABLE OF CONTENTS ]</h3>
-                        <ul id="handbook-toc" class="link-list">
-                            </ul>
-                    </div>
-                </section>
-
-                <section id="screen-minuteman" class="screen">
-                    <h2>[ MINUTEMAN OPERATIONS ]</h2>
-                    <div class="widget">
-                        <h3>[ DUTY STATUS ]</h3>
-                        <p>CURRENT STATUS: <span id="clock-status">OFF DUTY</span></p>
-                        <button class="tva-button" onclick="clockIn()">[ CLOCK IN ]</button>
-                        <button class="tva-button" onclick="clockOut()">[ CLOCK OUT ]</button>
-                    </div>
-                </section>
-
-                <section id="screen-variants" class="screen">
-                    <h2>[ VARIANT FILE DATABASE ]</h2>
-                    <p>Accessing files based on your security clearance...</p>
-                    <table id="variant-table">
-                        <thead>
-                            <tr>
-                                <th>VARIANT ID</th>
-                                <th>ALIAS</th>
-                                <th>THREAT</th>
-                                <th>STATUS</th>
-                                <th>FILE</th>
-                            </tr>
-                        </thead>
-                        <tbody id="variant-table-body">
-                            </tbody>
-                    </table>
-                </section>
-
-                <section id="screen-variant-detail" class="screen">
-                    <button class="tva-button" data-screen="screen-variants">[ < BACK TO LIST ]</button>
-                    <h2 id="variant-detail-title">[ FILE: ... ]</h2>
-                    <div class="widget">
-                        <p>> ID: <span id="variant-detail-id">...</span></p>
-                        <p>> ALIAS: <span id="variant-detail-alias">...</span></p>
-                        <p>> THREAT LEVEL: <span id="variant-detail-threat">...</span></p>
-                        <p>> STATUS: <span id="variant-detail-status">...</span></p>
-                        <h3>[ NEXUS EVENT ]</h3>
-                        <p id="variant-detail-nexus">...</p>
-                        <h3>[ TVA NOTES ]</h3>
-                        <p id="variant-detail-notes">...</p>
-                    </div>
-                </section>
-
-                <section id="screen-tribunal" class="screen">
-                    <h2>[ TVA TRIBUNAL ]</h2>
-                    <div class="widget">
-                        <h3>[ DEFENDANT: VARIANT <span id="case-id">...</span> ]</h3>
-                        <p>> CHARGE: <span id="case-charge">...</span></p>
-                        <p>> STATUS: Pending Sentence.</p>
-                        <p>> PLEA: Not Guilty</p>
-                        <div class="sentencing-buttons">
-                            <button class="tva-button btn-guilty" onclick="sentence('guilty')">[ SENTENCE: GUILTY (PRUNE) ]</button>
-                            <button class="tva-button btn-not-guilty" onclick="sentence('not-guilty')">[ SENTENCE: NOT GUILTY (RESET) ]</button>
-                        </div>
-                    </div>
-                </section>
-
-                <section id="screen-personnel" class="screen">
-                    <h2>[ PERSONNEL FILES ]</h2>
-                    <p>Accessing active agent files...</p>
-                    <table id="personnel-table">
-                        <thead>
-                            <tr>
-                                <th>AGENT ID</th>
-                                <th>RANK</th>
-                                <th>STATUS</th>
-                                <th>FILE</th>
-                            </tr>
-                        </thead>
-                        <tbody id="personnel-table-body">
-                            </tbody>
-                    </table>
-                </section>
-
-                <section id="screen-personnel-detail" class="screen">
-                    <button class="tva-button" data-screen="screen-personnel">[ < BACK TO LIST ]</button>
-                    <h2 id="personnel-detail-title">[ FILE: ... ]</h2>
-                    <div class="widget">
-                        <p>> ID: <span id="personnel-detail-id">...</span></p>
-                        <p>> RANK: <span id="personnel-detail-rank">...</span></p>
-                        <p>> STATUS: <span id="personnel-detail-status">...</span></p>
-                        <h3>[ SERVICE RECORD ]</h3>
-                        <ul id="personnel-detail-record">
-                            </ul>
-                    </div>
-                </section>
-
-                <section id="screen-tactical" class="screen">
-                    <h2>[ TACTICAL COMMAND ]</h2>
-                    <div class="widget">
-                        <h3>[ ACTIVE TEMP-DOORS ]</h3>
-                        <p>> DOOR 1: 1888 - London, UK</p>
-                        <p>> DOOR 2: 3050 - New Asgard</p>
-                        <p>> DOOR 3: 1999 - Roxxcart</p>
-                    </div>
-                </section>
-                
-                <section id="screen-creator" class="screen">
-                    <h2>[ ADMIN PROTOCOLS ]</h2>
-                    <div class="widget">
-                        <h3>[ SYSTEM INTEGRITY ]</h3>
-                        <p>WARNING: Activating this protocol is irreversible and will purge all temporal data on this terminal node.</p>
-                        <button id="purge-button" class="tva-button">[ INITIATE PURGE PROTOCOL ]</button>
-                    </div>
-                </section>
-                
-            </main>
-        </div>
     </div>
 
     <script src="script.js"></script>
