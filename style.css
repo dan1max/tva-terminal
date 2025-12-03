@@ -1,11 +1,11 @@
-/* --- VARIABLES DE LA TVA (Estilo Retro-Burocrático) --- */
+/* --- VARIABLES DE LA TVA --- */
 :root {
-    --tva-bg: #F5EFE6;         /* Beige papel */
-    --tva-orange: #D97706;     /* Naranja principal */
-    --tva-orange-dim: #b45309; /* Naranja oscuro */
-    --tva-brown: #3E2723;      /* Marrón oscuro (Texto) */
-    --tva-wood: #5D4037;       /* Marrón madera (Bordes) */
-    --tva-crt: #1a1a1a;        /* Negro pantalla */
+    --tva-bg: #F5EFE6;
+    --tva-orange: #D97706;
+    --tva-orange-dim: #b45309;
+    --tva-brown: #3E2723;
+    --tva-wood: #5D4037;
+    --tva-crt: #1a1a1a;
     
     --font-head: 'Playfair Display', serif;
     --font-mono: 'Courier Prime', monospace;
@@ -40,8 +40,9 @@ body {
     border: 4px double var(--tva-orange);
     padding: 40px;
     text-align: center;
-    background: rgba(0,0,0,0.8);
+    background: rgba(0,0,0,0.9);
     box-shadow: 0 0 20px var(--tva-orange-dim);
+    min-width: 400px;
 }
 
 .ascii-logo pre { color: var(--tva-orange); font-weight: bold; }
@@ -55,37 +56,41 @@ input {
     font-size: 1.2rem;
     margin-bottom: 15px;
     width: 100%;
+    outline: none;
 }
 
 button {
     background: var(--tva-orange);
     color: #000;
     border: none;
-    padding: 10px 20px;
+    padding: 15px 30px;
     font-family: var(--font-head);
     font-weight: bold;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 1.1rem;
     text-transform: uppercase;
+    width: 100%;
+    transition: 0.3s;
 }
 button:hover { background: #fff; }
 
-#login-error { color: red; display: none; font-family: var(--font-tech); }
+#login-error { color: #ff3333; display: none; font-family: var(--font-tech); margin-bottom: 10px;}
 
-/* --- LAYOUT PRINCIPAL --- */
+/* --- LAYOUT PRINCIPAL (CORREGIDO) --- */
 #tva-terminal {
-    display: none; /* Oculto hasta login */
-    display: flex;
+    display: none; /* IMPORTANTE: Oculto inicialmente */
     height: 100%;
+    width: 100%;
 }
 
 #sidebar {
-    width: 250px;
+    width: 280px;
     background: var(--tva-wood);
     color: var(--tva-bg);
     display: flex;
     flex-direction: column;
     border-right: 5px solid var(--tva-brown);
+    flex-shrink: 0;
 }
 
 .sidebar-header {
@@ -121,13 +126,13 @@ button:hover { background: #fff; }
 .sidebar-footer { padding: 20px; }
 #logout-button { width: 100%; background: #000; color: var(--tva-orange); border: 1px solid var(--tva-orange); }
 
-/* --- EL VISOR WIKI (Clonando SCP CSS) --- */
+/* --- EL VISOR WIKI --- */
 #main-content {
     flex-grow: 1;
     overflow-y: auto;
     padding: 40px;
     background-image: 
-        linear-gradient(rgba(245, 239, 230, 0.9), rgba(245, 239, 230, 0.9)),
+        linear-gradient(rgba(245, 239, 230, 0.95), rgba(245, 239, 230, 0.95)),
         url('https://www.transparenttextures.com/patterns/aged-paper.png');
 }
 
@@ -135,12 +140,12 @@ button:hover { background: #fff; }
     max-width: 900px;
     margin: 0 auto;
     background: white;
-    padding: 40px;
+    padding: 50px;
     border: 1px solid #ccc;
-    box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 5px 5px 20px rgba(0,0,0,0.15);
 }
 
-/* 1. Títulos */
+/* Títulos y Elementos */
 h1.page-title {
     font-family: var(--font-head);
     font-size: 3rem;
@@ -152,35 +157,19 @@ h1.page-title {
     letter-spacing: 2px;
 }
 
-/* 2. Caja de Advertencia (Clone de warning-box) */
+/* Caja de Advertencia */
 .warning-box {
     border: 3px solid var(--tva-brown);
-    background: repeating-linear-gradient(
-        45deg,
-        #f5efe6,
-        #f5efe6 10px,
-        #e0d0b0 10px,
-        #e0d0b0 20px
-    );
+    background: repeating-linear-gradient(45deg, #f5efe6, #f5efe6 10px, #e0d0b0 10px, #e0d0b0 20px);
     padding: 20px;
     text-align: center;
     margin-bottom: 30px;
-    position: relative;
     box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
 }
-
-.warning-header {
-    font-family: var(--font-head);
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #ce3802; /* Rojo oscuro TVA */
-    margin-bottom: 10px;
-    text-transform: uppercase;
-}
-
+.warning-header { font-family: var(--font-head); font-size: 1.5rem; font-weight: bold; color: #ce3802; margin-bottom: 10px; text-transform: uppercase; }
 .warning-text { font-size: 0.9rem; font-weight: bold; }
 
-/* 3. Barra ACS (Anomaly Classification System) - ADAPTADA A TVA */
+/* Barra ACS */
 .acs-bar {
     display: grid;
     grid-template-columns: 100px 1fr 100px;
@@ -188,148 +177,44 @@ h1.page-title {
     margin-bottom: 30px;
     font-family: var(--font-tech);
 }
-
-.acs-left {
-    background: var(--tva-brown);
-    color: var(--tva-orange);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-}
+.acs-left { background: var(--tva-brown); color: var(--tva-orange); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 10px; }
 .acs-left .big-number { font-size: 2.5rem; font-weight: bold; line-height: 1; }
 .acs-left span { font-size: 0.7rem; text-transform: uppercase; }
 
-.acs-center {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    text-align: center;
-}
-
-.acs-segment {
-    border-right: 2px solid var(--tva-brown);
-    display: flex;
-    flex-direction: column;
-}
+.acs-center { display: grid; grid-template-columns: 1fr 1fr 1fr; text-align: center; }
+.acs-segment { border-right: 2px solid var(--tva-brown); display: flex; flex-direction: column; }
 .acs-segment:last-child { border-right: none; }
+.acs-header { background: var(--tva-orange); color: var(--tva-brown); font-weight: bold; font-size: 0.8rem; padding: 5px; text-transform: uppercase; border-bottom: 2px solid var(--tva-brown); }
+.acs-value { flex-grow: 1; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: bold; padding: 10px; text-transform: uppercase; background: #fff; }
 
-.acs-header {
-    background: var(--tva-orange);
-    color: var(--tva-brown);
-    font-weight: bold;
-    font-size: 0.8rem;
-    padding: 5px;
-    text-transform: uppercase;
-    border-bottom: 2px solid var(--tva-brown);
-}
-
-.acs-value {
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    font-weight: bold;
-    padding: 10px;
-    text-transform: uppercase;
-    background: #fff;
-}
-
-/* Colores para niveles de amenaza */
 .threat-low { background-color: #a5d6a7; }
 .threat-med { background-color: #ffe082; }
 .threat-high { background-color: #ffcc80; }
 .threat-critical { background-color: #ef9a9a; color: #fff; animation: pulse 2s infinite; }
-
 @keyframes pulse { 0% {opacity: 1;} 50% {opacity: 0.7;} 100% {opacity: 1;} }
 
-.acs-right {
-    background: var(--tva-brown);
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    text-align: center;
-}
+.acs-right { background: var(--tva-brown); color: #fff; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 10px; text-align: center; }
 .acs-right .level-num { font-size: 2rem; font-weight: bold; }
 
-/* 4. Bloque de Imagen (scp-image-block) */
-.image-block {
-    border: 1px solid var(--tva-brown);
-    background: #fff;
-    padding: 5px;
-    margin-bottom: 20px;
-    box-shadow: 3px 3px 0 var(--tva-brown);
-}
-/* Flotar a la derecha en escritorio */
-@media (min-width: 768px) {
-    .image-block {
-        float: right;
-        width: 300px;
-        margin-left: 20px;
-    }
-}
+/* Bloque de Imagen */
+.image-block { border: 1px solid var(--tva-brown); background: #fff; padding: 5px; margin-bottom: 20px; box-shadow: 3px 3px 0 var(--tva-brown); }
+@media (min-width: 768px) { .image-block { float: right; width: 300px; margin-left: 20px; } }
 .image-block img { width: 100%; display: block; filter: sepia(40%) contrast(1.1); }
-.image-caption {
-    padding: 10px;
-    font-size: 0.85rem;
-    background: #f0f0f0;
-    border-top: 1px solid #ccc;
-    font-weight: bold;
-}
+.image-caption { padding: 10px; font-size: 0.85rem; background: #f0f0f0; border-top: 1px solid #ccc; font-weight: bold; }
 
-/* 5. Estilos de Texto Wiki */
+/* Textos */
 p { line-height: 1.6; margin-bottom: 15px; text-align: justify; }
-strong { color: var(--tva-brown); }
+blockquote { background: #fdf6e3; border-left: 5px solid var(--tva-orange); margin: 20px 0; padding: 15px; font-family: var(--font-mono); font-size: 0.95rem; box-shadow: inset 0 0 5px rgba(0,0,0,0.05); }
 
-/* 6. Blockquote (Para Logs) */
-blockquote {
-    background: #fdf6e3;
-    border-left: 5px solid var(--tva-orange);
-    margin: 20px 0;
-    padding: 15px;
-    font-family: var(--font-mono);
-    font-size: 0.95rem;
-    box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
-}
-
-/* 7. Collapsibles (Addendums) */
-details {
-    margin-bottom: 10px;
-    border: 1px solid var(--tva-brown);
-    background: #fff;
-}
-summary {
-    background: var(--tva-brown);
-    color: var(--tva-orange);
-    padding: 10px;
-    cursor: pointer;
-    font-weight: bold;
-    font-family: var(--font-tech);
-    list-style: none; /* Ocultar flecha por defecto */
-}
+/* Collapsibles */
+details { margin-bottom: 10px; border: 1px solid var(--tva-brown); background: #fff; }
+summary { background: var(--tva-brown); color: var(--tva-orange); padding: 10px; cursor: pointer; font-weight: bold; font-family: var(--font-tech); list-style: none; }
 summary::after { content: "+ EXPAND FILE"; float: right; }
 details[open] summary::after { content: "- CLOSE FILE"; }
-details[open] summary { border-bottom: 1px solid var(--tva-brown); }
 .collapsible-content { padding: 20px; }
 
-/* 8. Botones de Juez */
-.judge-panel {
-    background: #eee;
-    border: 2px dashed var(--tva-brown);
-    padding: 20px;
-    text-align: center;
-    margin-top: 20px;
-}
-.judge-btn {
-    margin: 10px;
-    width: 40%;
-}
+/* Botones Juez */
+.judge-panel { background: #eee; border: 2px dashed var(--tva-brown); padding: 20px; text-align: center; margin-top: 20px; }
+.judge-btn { margin: 10px; width: 40%; }
 .btn-reset { background-color: #27AE60; color: white; }
 .btn-prune { background-color: #C0392B; color: white; }
-
-/* Clases de utilidad para visibilidad por rol */
-.role-only { display: none; }
