@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Anomaly - TVA</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">TVA</div>
+        <div class="tagline">Time Variance Authority</div>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="missions.html">Missions</a>
+        <a href="variants.html">Variants</a>
+        <a href="contact.html">Report Anomaly</a>
+    </nav>
+
+    <section class="section">
+        <h1>Report Temporal Anomaly</h1>
+
+        <div class="info-box">
+            <p>If you have witnessed a temporal anomaly, nexus event, or variant activity, it is your duty to report it immediately to the Time Variance Authority. Your vigilance helps protect the Sacred Timeline.</p>
+        </div>
+
+        <div class="warning-box">
+            ⚠ WARNING: Filing a false report is a serious offense punishable by timeline pruning ⚠
+        </div>
+
+        <div class="form-container">
+            <form id="anomalyForm">
+                <div class="form-group">
+                    <label for="reporterName">Your Name <span class="required">*</span></label>
+                    <input type="text" id="reporterName" name="reporterName" required placeholder="Enter your full name">
+                </div>
+
+                <div class="form-group">
+                    <label for="reporterTimeline">Your Timeline Designation <span class="required">*</span></label>
+                    <input type="text" id="reporterTimeline" name="reporterTimeline" required placeholder="e.g., 616-2025">
+                </div>
+
+                <div class="form-group">
+                    <label for="anomalyType">Anomaly Type <span class="required">*</span></label>
+                    <select id="anomalyType" name="anomalyType" required>
+                        <option value="">Select anomaly type...</option>
+                        <option value="variant">Variant Sighting</option>
+                        <option value="nexus">Nexus Event</option>
+                        <option value="branch">Timeline Branch</option>
+                        <option value="temporal">Temporal Distortion</option>
+                        <option value="unauthorized">Unauthorized Time Travel</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Location of Anomaly <span class="required">*</span></label>
+                    <input type="text" id="location" name="location" required placeholder="Specific location and coordinates">
+                </div>
+
+                <div class="form-group">
+                    <label for="timeDate">Date and Time of Occurrence <span class="required">*</span></label>
+                    <input type="datetime-local" id="timeDate" name="timeDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="threatLevel">Estimated Threat Level <span class="required">*</span></label>
+                    <select id="threatLevel" name="threatLevel" required>
+                        <option value="">Select threat level...</option>
+                        <option value="low">Low - Minor deviation</option>
+                        <option value="medium">Medium - Noticeable branch forming</option>
+                        <option value="high">High - Major timeline disruption</option>
+                        <option value="extreme">Extreme - Imminent timeline collapse</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Detailed Description <span class="required">*</span></label>
+                    <textarea id="description" name="description" required placeholder="Provide a detailed account of what you witnessed. Include all relevant details about the anomaly, any variants involved, and the immediate effects observed."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="witnesses">Additional Witnesses</label>
+                    <input type="text" id="witnesses" name="witnesses" placeholder="Names and contact information of other witnesses">
+                </div>
+
+                <div class="form-group">
+                    <label for="evidence">Evidence Available</label>
+                    <textarea id="evidence" name="evidence" placeholder="Describe any physical evidence, recordings, or documentation you possess"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="contactMethod">Preferred Contact Method <span class="required">*</span></label>
+                    <select id="contactMethod" name="contactMethod" required>
+                        <option value="">Select contact method...</option>
+                        <option value="tempad">TemPad</option>
+                        <option value="temporal">Temporal Communication Device</option>
+                        <option value="standard">Standard Timeline Communication</option>
+                        <option value="field">TVA Field Agent Visit</option>
+                    </select>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <label>
+                        <input type="checkbox" id="urgent" name="urgent">
+                        <span>This is an urgent matter requiring immediate TVA response</span>
+                    </label>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <label>
+                        <input type="checkbox" id="acknowledge" name="acknowledge" required>
+                        <span class="required">* I acknowledge that all information provided is accurate to the best of my knowledge and understand that false reports will result in severe consequences</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="submit-btn">Submit Report to TVA</button>
+            </form>
+
+            <div id="formSuccess" class="success-message" style="display: none;">
+                <h3>✓ Report Submitted Successfully</h3>
+                <p>Your report has been received by the Time Variance Authority. A response team will be dispatched to investigate immediately.</p>
+                <p><strong>Report ID:</strong> <span id="reportId"></span></p>
+                <p>For All Time. Always.</p>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <h3>Emergency Contact</h3>
+            <p>For immediate temporal emergencies, use your TemPad to contact TVA Emergency Response at frequency 847-TIMELINE or press the emergency beacon on any TVA monitoring device.</p>
+        </div>
+
+        <div class="info-box">
+            <h3>What Happens Next?</h3>
+            <p><strong>Step 1:</strong> Your report is analyzed by our temporal detection systems</p>
+            <p><strong>Step 2:</strong> A Minuteman team is dispatched to investigate</p>
+            <p><strong>Step 3:</strong> The anomaly is contained and corrected</p>
+            <p><strong>Step 4:</strong> Timeline integrity is verified and restored</p>
+            <p><strong>Step 5:</strong> You will be contacted with the outcome (if timeline position allows)</p>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>TIME VARIANCE AUTHORITY - Established at the End of Time</p>
+        <p>For All Time. Always.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
