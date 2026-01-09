@@ -1,59 +1,17 @@
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
+// Smooth scroll for navigation
+document.querySelectorAll('nav a').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        if (this.getAttribute('href').startsWith('#')) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
         }
     });
 });
 
-// Form submission handling
-const contactForm = document.querySelector('.contact-form');
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Get form values
-        const formData = new FormData(this);
-        
-        // Here you would typically send the data to a server
-        // For now, we'll just show an alert
-        alert('Thank you for your message! I will get back to you soon.');
-        
-        // Reset form
-        this.reset();
-    });
-}
-
-// Add active class to navigation based on scroll position
-window.addEventListener('scroll', function() {
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-menu a');
-    
-    let current = '';
-    
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (scrollY >= (sectionTop - 200)) {
-            current = section.getAttribute('id');
-        }
-    });
-    
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href').slice(1) === current) {
-            link.classList.add('active');
-        }
-    });
-});
-
-// Add scroll animation to project cards
+// Add fade-in animation to cards on scroll
 const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -50px 0px'
@@ -68,9 +26,27 @@ const observer = new IntersectionObserver(function(entries) {
     });
 }, observerOptions);
 
-document.querySelectorAll('.project-card').forEach(card => {
+document.querySelectorAll('.card').forEach(card => {
     card.style.opacity = '0';
     card.style.transform = 'translateY(30px)';
     card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
     observer.observe(card);
+});
+
+// Animate timeline items
+document.querySelectorAll('.timeline-item').forEach((item, index) => {
+    item.style.opacity = '0';
+    item.style.transform = 'translateX(-20px)';
+    item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    item.style.transitionDelay = `${index * 0.2}s`;
+    observer.observe(item);
+});
+
+// Animate stat boxes
+document.querySelectorAll('.stat-box').forEach((box, index) => {
+    box.style.opacity = '0';
+    box.style.transform = 'scale(0.8)';
+    box.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    box.style.transitionDelay = `${index * 0.15}s`;
+    observer.observe(box);
 });
