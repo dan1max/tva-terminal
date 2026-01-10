@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TVA - Secure Login</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="login-body">
+    <div class="login-container">
+        <div class="login-header">
+            <div class="logo">TVA</div>
+            <div class="tagline">Time Variance Authority</div>
+            <div class="security-notice">AUTHORIZED PERSONNEL ONLY</div>
+        </div>
+
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <span>TVA SECURE TERMINAL v3.847</span>
+                <div class="terminal-status">
+                    <span class="status-dot"></span>
+                    <span>ONLINE</span>
+                </div>
+            </div>
+
+            <form id="loginForm" class="login-form">
+                <div class="terminal-line">
+                    <span class="prompt">&gt;</span>
+                    <span class="terminal-text">ENTER CREDENTIALS TO ACCESS SYSTEM</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="username">
+                        <span class="prompt">&gt;</span> USERNAME:
+                    </label>
+                    <input type="text" id="username" name="username" required autocomplete="off" placeholder="Enter your TVA username">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">
+                        <span class="prompt">&gt;</span> PASSWORD:
+                    </label>
+                    <input type="password" id="password" name="password" required autocomplete="off" placeholder="Enter your password">
+                </div>
+
+                <div id="loginError" class="error-message" style="display: none;">
+                    <span class="prompt">!</span> ACCESS DENIED - INVALID CREDENTIALS
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="login-btn">
+                        <span class="prompt">&gt;</span> AUTHENTICATE
+                    </button>
+                </div>
+            </form>
+
+            <div class="terminal-info">
+                <div class="terminal-line">
+                    <span class="prompt">&gt;</span>
+                    <span class="terminal-text">SECURITY LEVEL: MAXIMUM</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="prompt">&gt;</span>
+                    <span class="terminal-text">ALL ACCESS ATTEMPTS ARE LOGGED</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="login-help">
+            <h3>Access Levels:</h3>
+            <p><strong>Time-Keeper:</strong> Full system access</p>
+            <p><strong>Judge:</strong> High-level operations and trials</p>
+            <p><strong>Hunter:</strong> Field operations and variant database</p>
+            <p><strong>Analyst:</strong> Timeline monitoring and reports</p>
+            <p><strong>Minuteman:</strong> Basic field operations</p>
+        </div>
+
+        <div class="warning-box">
+            ⚠ UNAUTHORIZED ACCESS WILL RESULT IN IMMEDIATE PRUNING ⚠
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+</body>
+</html>
